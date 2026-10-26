@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Project Shop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+
+<main>
+
+    <div class="container my-4">
+
+        <div th:if="${carrito == null}"
+             class="text-center">
+
+            <div class="py-5">
+                <h2>Aún no ha seleccionado ningún producto para comprar</h2>
+            </div>
+
+        </div>
+
+        <div th:unless="${carrito == null}">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Total</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="producto : ${carrito}">
+
+                        <td>
+                            <div class="d-flex align-items-center">
+
+                                <img src="https://placehold.it/150x150?text=SIN%20IMAGEN"
+                                     class="img-thumbnail me-3"
+                                     style="width: 100px; height: 100px; object-fit: contain;"
+                                     alt="Imagen del producto"
+                                     th:src="${#strings.isEmpty(producto.image) ? 'https://placehold.it/150x150?text=SIN%20IMAGEN' : producto.image}">
+
+                                <div>
+                                    <h5 class="mb-1"
+                                        th:text="${producto.name}">
+                                        Nombre del producto
+                                    </h5>
+
+                                    <small class="text-body-secondary">
+                                        Vendedor: <span>empresax</span>
+                                    </small>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <td class="text-center">
+                            <strong th:text="${#numbers.formatCurrency(producto.price)}">
+                                $00.00
+                            </strong>
+                        </td>
+
+                        <td class="text-center">
+                            <strong th:text="${producto.buyQuantity}">
+                                1
+                            </strong>
+                        </td>
+
+                        <td class="text-center">
+                            <strong th:text="${#numbers.formatCurrency(producto.price * producto.buyQuantity)}">
+                                $00.00
+                            </strong>
+                        </td>
+
+                        <td class="text-center">
+
+                            <a th:href="@{/app/carrito/eliminar/{id}(id=${producto.id})}"
+                               class="btn btn-danger">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm5 0A.5.5 0 0 1 11 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3.5a1 1 0 0 1 1 1zM6 1v1h4V1H6zm6 3H4v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4z"/>
+                                </svg>
+
+                                Eliminar
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="2"></td>
+
+                        <td class="text-end">
+                            <h3 class="mb-0">Total</h3>
+                        </td>
+
+                        <td class="text-center">
+                            <h3 class="mb-0">
+                                <strong th:text="${#numbers.formatCurrency(total_carrito)}">
+                                    $31.53
+                                </strong>
+                            </h3>
+                        </td>
+
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            <div class="d-flex justify-content-end gap-2">
+
+                                <a th:href="@{/public/}"
+                                   class="btn btn-outline-secondary">
+                                    Continuar comprando
+                                </a>
+
+                                <a th:href="@{/app/carrito/finalizar}"
+                                   class="btn btn-success">
+                                    Finalizar compra
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+
+</html>

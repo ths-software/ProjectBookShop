@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ProjectShop</title>
+
+	<link rel="stylesheet"
+	      th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+	<link rel="stylesheet"
+	      th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+
+<main>
+	<div class="container my-4">
+
+		<div class="row" th:if="${#lists.isEmpty(mis_compras)}">
+			<div class="col-md-10 offset-md-1">
+				<div class="py-5">
+					<h2 class="text-center">
+						Aún no ha seleccionado ningún producto para comprar
+					</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" th:unless="${#lists.isEmpty(mis_compras)}">
+			<div class="col-md-4 offset-md-4">
+
+				<div class="table-responsive">
+					<table class="table table-striped align-middle">
+						<thead>
+						<tr>
+							<th>ID</th>
+							<th>Fecha</th>
+							<th></th>
+						</tr>
+						</thead>
+
+						<tbody>
+						<tr th:each="compra : ${mis_compras}">
+							<td>
+								<span th:text="${compra.id}">1</span>
+							</td>
+
+							<td>
+                                <span th:text="${#temporals.format(compra.buyDate,'dd/MMM/yyyy HH:mm')}">
+                                    10/10/2018 10:10
+                                </span>
+							</td>
+
+							<td>
+								<a th:href="@{/app/compra/factura/{id}(id=${compra.id})}"
+								   class="btn btn-info">
+									Ver factura
+								</a>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

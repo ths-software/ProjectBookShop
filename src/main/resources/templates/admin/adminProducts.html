@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProjectShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+<main class="container my-4">
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="product : ${productStockMap}">
+                <th scope="row" th:text="${product.key.id}">1</th>
+
+                <td th:text="${product.key.name}">
+                    Producto
+                </td>
+
+                <td th:text="${product.key.price}">
+                    Precio
+                </td>
+
+                <td th:text="${product.key.description}">
+                    Descripción
+                </td>
+
+                <td th:text="${product.value.stockQuantity}">
+                    Stock
+                </td>
+
+                <td th:text="${product.value.seller}">
+                    Vendedor
+                </td>
+
+                <td class="product-image-text" th:text="${product.key.image}">
+                    Imagen
+                </td>
+
+                <td>
+                    <a class="btn btn-info"
+                       th:href="@{/admin/product/edit/{id}(id=${product.key.id})}">
+                        Editar
+                    </a>
+                </td>
+
+                <td>
+                    <form th:action="@{/admin/product/delete/{id}(id=${product.key.id})}"
+                          method="post">
+                        <button type="submit" class="btn btn-danger">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>ProjectShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+<body>
+
+
+<header th:replace="layouts/title::title"> </header>
+
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+<main class="container-fluid d-flex justify-content-center align-items-center">
+
+    <div class="w-100" style="max-width: 400px;">
+
+        <h1 class="text-center mb-4">
+            Accede a tu cuenta
+        </h1>
+
+        <form id="loginform"
+              class="form-horizontal"
+              method="POST"
+              th:action="@{/auth/login-post}"
+              role="form">
+
+            <!-- CSRF -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+            <!-- -->
+
+            <div class="mb-3">
+                <label for="login-username" class="form-label">
+                    Email
+                </label>
+
+                <input id="login-username"
+                       type="email"
+                       class="form-control"
+                       name="username"
+                       placeholder="tu@email.com"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="login-password" class="form-label">
+                    Contraseña
+                </label>
+
+                <input id="login-password"
+                       type="password"
+                       class="form-control"
+                       name="password"
+                       placeholder="Contraseña"
+                       required>
+            </div>
+
+            <div th:if="${param.error}"
+                 class="alert alert-danger">
+                Usuario o contraseña incorrectos.
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary w-100">
+                Iniciar sesión
+            </button>
+
+            <div class="text-center mt-4">
+                <span>¿Todavía no tienes una cuenta?</span>
+                <a th:href="@{/auth/signup}">
+                    Créala ahora mismo
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

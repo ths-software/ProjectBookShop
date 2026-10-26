@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProjectShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+<main class="container my-4">
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">usuario</th>
+                <th scope="col">Estado</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="buy : ${buys}">
+                <th scope="row" th:text="${buy.id}">1</th>
+
+
+                <td th:text="${#temporals.format(buy.buyDate,'dd/MMM/yyyy HH:mm')}">
+                    date
+                </td>
+
+                <td th:text="${buy.propietary.name}">
+                    user
+                </td>
+
+                <td th:text="${buy.buyState}">
+                    state
+                </td>
+
+                <td>
+                    <a class="btn btn-info"
+                      th:href="@{/admin/buy/edit/{id}(id=${buy.id})}">
+                        Procesar
+                    </a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

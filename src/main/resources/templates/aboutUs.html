@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProjectShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+<main class="container my-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+
+            <h1 class="mb-4">Sobre nosotros</h1>
+
+            <p class="lead">
+                Bienvenido a ProjectShop, tu tienda online para encontrar
+                productos de calidad de forma sencilla y segura.
+            </p>
+
+            <p>
+                Nuestro objetivo es ofrecer una experiencia de compra clara,
+                rápida y cómoda, poniendo a tu disposición una selección de
+                productos pensada para todo tipo de clientes.
+            </p>
+
+            <p>
+                En ProjectShop trabajamos para mejorar continuamente nuestra
+                plataforma y ofrecerte una experiencia cada vez mejor.
+            </p>
+
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

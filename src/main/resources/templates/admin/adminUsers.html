@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ProjectShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+<form th:action="@{/auth/logout}"
+      method="POST"
+      id="logoutForm">
+</form>
+
+<main class="container my-4">
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Password</th>
+                <th scope="col">Role</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${users}" >
+                <td th:text="${user.name}">Nombre</td>
+                <td th:text="${user.surName}">Apellido</td>
+                <td th:text="${user.email}">Email</td>
+                <td>********</td>
+                <td th:text="${user.role}">Role</td>
+                <td>
+                    <a th:href="@{/admin/user/edit/{id}(id=${user.id})}"
+                        type="button" class="btn btn-info">
+                        Editar
+                    </a>
+                </td>
+                <td>
+                    <form method="post" th:action="@{/admin/user/delete/{id}(id=${user.id})}">
+                        <button type="submit"  class="btn btn-info">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

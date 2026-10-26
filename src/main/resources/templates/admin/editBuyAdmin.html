@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ProjectShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<header th:replace="layouts/title::title"> </header>
+
+<nav th:replace="layouts/navbar::navbar"></nav>
+
+<form th:action="@{/auth/logout}"
+      method="POST"
+      id="logoutForm">
+</form>
+
+<main class="container my-4">
+
+    <form method="post"
+          th:action="@{/admin/buy/edit/submit}"
+          th:object="${buy}">
+
+        <h1 class="mb-4">Procesar pedido</h1>
+
+        <div class="mb-3">
+            <label type="text"
+                   class=""
+                   id="id"
+                   th:text="'ID: ' + ${id}"></label>
+        </div>
+
+        <div class="mb-3">
+            <label type="text"
+                   class=""
+                   id="name"
+                   th:text="'Nombre: ' + ${buy.propietary.name} + '. Apellido: ' + ${buy.propietary.surName}">Nombre</label>
+        </div>
+
+        <div class="mb-3">
+            <label type="text"
+                   class=""
+                   id="email"
+                   th:text="'Email: ' + ${buy.propietary.email}">Email</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="state" class="form-label">Estado</label>
+
+            <select id="state" class="form-select" th:field="*{buyState}">
+                <option th:each="state : ${T(com.projectshop.models.BuyState).values()}"
+                        th:value="${state}"
+                        th:text="${state}">
+                </option>
+            </select>
+        </div>
+
+        <label for="name" class="form-label">Items</label>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="product : ${productsOfBuy}">
+                    <th scope="row" th:text="${product.id}">1</th>
+
+                    <td th:text="${product.name}">
+                        Producto
+                    </td>
+
+                    <td th:text="${product.price}">
+                        Precio
+                    </td>
+
+                    <td th:text="${product.buyQuantity}">
+                        Cantidad
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!-- CSRF -->
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+        <!-- -->
+
+        <button type="submit" class="btn btn-primary">
+            Aceptar
+        </button>
+
+    </form>
+
+</main>
+
+<footer th:replace="layouts/footer::footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
